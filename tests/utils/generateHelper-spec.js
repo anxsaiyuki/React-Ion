@@ -5,166 +5,279 @@
 const mocha = require('mocha');
 const expect = require('chai').expect;
 const Helper = require('../../server/utils/generateHelper.js');
+const fs = require('fs.extra');
+const path = require('path');
 
 const describe = mocha.describe;
 const it = mocha.it;
 const beforeEach = mocha.beforeEach;
 const after = mocha.after;
 
-describe('User Model', () => {
-  const username = 'gold';
-  const password = 'hahaha';
-  const salt = 'somethingRandom';
-  const newUser = { username, password, salt };
+describe('File Creation', () => {
+  const userId = 100000;
+  const treeData = {
+    total: 3,
+    router: 1,
+    routes: [
+      {
+        name: 'Index',
+        componentType: 'Block',
+        props: {
+          backgroundColor: '#4ccbf1 ',
+          flex: 1,
+          height: [1300, 'px'],
+          width: [20, '%'],
+          flexDirection: 'column',
+        },
+        children: [
+          {
+            name: 'Body',
+            componentType: 'Block',
+            props: {
+              backgroundColor: '#4ccbf1 ',
+              flex: 1,
+              height: [1300, 'px'],
+              width: [20, '%'],
+              flexDirection: 'column',
+            },
+            children: [
+              {
+                name: 'Username',
+                componentType: 'Text',
+                props: {
+                  backgroundColor: '#4ccbf1 ',
+                  flex: 1,
+                  height: [1300, 'px'],
+                  width: [20, '%'],
+                  flexDirection: 'column',
+                },
+                children: [],
+              },
+            ],
+          },
+        ],
+      },
+      {
+        name: 'Login',
+        componentType: 'Block',
+        props: {
+          backgroundColor: '#4ccbf1 ',
+          flex: 1,
+          height: [1300, 'px'],
+          width: [20, '%'],
+          flexDirection: 'column',
+        },
+        children: [
+          {
+            name: 'Body',
+            componentType: 'Block',
+            props: {
+              backgroundColor: '#4ccbf1 ',
+              flex: 1,
+              height: [1300, 'px'],
+              width: [20, '%'],
+              flexDirection: 'column',
+            },
+            children: [],
+          },
+        ],
+      },
+    ],
+  };
 
   beforeEach((done) => {
-    User.remove({ username: 'gold' }, (err) => {
-      if (err) { console.error(err); }
-      User.remove({ username: 'silver' }, (err2) => {
-        if (err2) { console.error(err2); }
-        User.remove({ username: 'copper' }, (err3) => {
-          if (err3) { console.error(err3); }
-          done();
-        });
+    const folderPath = path.join(__dirname, `../../user/${userId}`);
+    const userPath = path.join(__dirname, `../../user/${userId}`);
+    const structurePath = path.join(__dirname, '../../server/structure');
+
+    fs.rmrf(folderPath, (err) => {
+      if (err) {
+        console.log(err);
+      }
+      fs.copyRecursive(structurePath, userPath, (err2) => {
+        if (err2) {
+          throw err2;
+        }
+        done();
       });
     });
   });
 
   after((done) => {
-    User.remove({ username: 'gold' }, (err) => {
-      if (err) { console.error(err); }
-      User.remove({ username: 'silver' }, (err2) => {
-        if (err2) { console.error(err2); }
-        User.remove({ username: 'copper' }, (err3) => {
-          if (err3) { console.error(err3); }
-          done();
-        });
-      });
+    const folderPath = path.join(__dirname, `../../user/${userId}`);
+    fs.rmrf(folderPath, (err) => {
+      if (err) {
+        console.log(err);
+      }
+      done();
     });
   });
 
-  describe('User creation: ', () => {
-    it('Does not add invalid users to database', (done) => {
-      User.create({ username: '123' }, (err) => {
-        expect(err).to.exist;
+  describe('React Router creation: ', () => {
+    it('Should create server file', (done) => {
+      Helper.serverSetup(treeData, userId, () => {
+        expect(fs.existsSync(path.join(__dirname, `../../user/${userId}/server/server.js`))).to.be.true;
         done();
       });
     });
 
-    it('Adds valid users to database', (done) => {
-      User.create(newUser, (err) => {
-        expect(err).to.not.exist;
-        User.get({}, (err2, users) => {
-          expect(err2).to.not.exist;
-          expect(users.length).to.not.equal(0);
-          console.log(users[0].username);
-          expect(users[0].username).to.equal('gold');
-          done();
-        });
+    it('Should create webpack file', (done) => {
+      Helper.webpackSetup(treeData, userId, () => {
+        expect(fs.existsSync(path.join(__dirname, `../../user/${userId}/webpack.config.js`))).to.be.true;
+        done();
+      });
+    });
+
+    it('Should create router file', (done) => {
+      Helper.routerSetup(treeData, userId, () => {
+        expect(fs.existsSync(path.join(__dirname, `../../user/${userId}/src/js/App.jsx`))).to.be.true;
+        done();
       });
     });
   });
 
-  describe('User Update: ', () => {
-    it('Does not add or remove users from database', (done) => {
-      User.create(newUser, (err) => {
-        expect(err).to.not.exist;
-        const newUser2 = {};
-        Object.assign(newUser2, newUser);
-        newUser2.password = 'notRandom';
-        User.update(newUser2, (err2) => {
-          expect(err2).to.not.exist;
-          User.get({}, (err3, users) => {
-            expect(err3).to.not.exist;
-            expect(users.length).to.not.equal(0);
-            done();
-          });
-        });
-      });
-    });
 
-    it('Updates existing users from database', (done) => {
-      User.create(newUser, (err) => {
-        expect(err).to.not.exist;
-        const newUser2 = Object.assign(newUser);
-        newUser2.password = 'notRandom';
-        User.update(newUser2, (err2) => {
-          expect(err2).to.not.exist;
-          User.get({}, (err3, users) => {
-            expect(err3).to.not.exist;
-            expect(users[0].password).to.equal('notRandom');
-            done();
-          });
-        });
+  beforeEach((done) => {
+    const folderPath = path.join(__dirname, `../../user/${userId}`);
+    const userPath = path.join(__dirname, `../../user/${userId}`);
+    const structurePath = path.join(__dirname, '../../server/structure');
+    treeData.router = 0;
+    fs.rmrf(folderPath, (err) => {
+      if (err) {
+        console.log(err);
+      }
+      fs.copyRecursive(structurePath, userPath, (err2) => {
+        if (err2) {
+          throw err2;
+        }
+        done();
       });
     });
   });
 
-  describe('User get: ', () => {
-    const newUser3 = {};
-    Object.assign(newUser3, newUser);
-    newUser3.username = 'silver';
-    const newUser4 = {};
-    Object.assign(newUser4, newUser);
-    newUser4.username = 'copper';
-
-    it('Gets all users if passed empty object', (done) => {
-      User.create(newUser, (err) => {
-        expect(err).to.not.exist;
-        User.create(newUser3, (err2) => {
-          expect(err2).to.not.exist;
-          User.create(newUser4, (err3) => {
-            expect(err3).to.not.exist;
-            User.get({}, (err4, users) => {
-              expect(err4).to.not.exist;
-              expect(users.length).to.be.above(2);
-              done();
-            });
-          });
-        });
+  describe('No React Router creation: ', () => {
+    it('Should create server file', (done) => {
+      Helper.serverSetup(treeData, userId, () => {
+        expect(fs.existsSync(path.join(__dirname, `../../user/${userId}/server/server.js`))).to.be.true;
+        done();
       });
     });
 
-    it('Uses username as search query when passed object with username property', (done) => {
-      User.create(newUser, (err) => {
-        expect(err).to.not.exist;
-        User.create(newUser3, (err2) => {
-          expect(err2).to.not.exist;
-          User.create(newUser4, (err3) => {
-            expect(err3).to.not.exist;
-            User.get({ username: 'silver' }, (err4, users) => {
-              expect(err4).to.not.exist;
-              expect(users.length).to.equal(1);
-              expect(users[0].username).to.equal('silver');
-              done();
-            });
-          });
-        });
+    it('Should create webpack file', (done) => {
+      Helper.webpackSetup(treeData, userId, () => {
+        expect(fs.existsSync(path.join(__dirname, `../../user/${userId}/webpack.config.js`))).to.be.true;
+        done();
+      });
+    });
+
+    it('Should create Index and Login Page', (done) => {
+      Helper.htmlSetup(treeData, userId, () => {
+        expect(fs.existsSync(path.join(__dirname, `../../user/${userId}/src/Index.html`))).to.be.true;
+        expect(fs.existsSync(path.join(__dirname, `../../user/${userId}/src/Login.html`))).to.be.true;
+        expect(fs.existsSync(path.join(__dirname, `../../user/${userId}/page.json`))).to.be.true;
+        done();
+      });
+    });
+
+
+    it('Should create css file', (done) => {
+      const nestedTree = {
+        total: 3,
+        router: 1,
+        routes: [
+          {
+            name: 'Index',
+            componentType: 'Block',
+            props: {
+              backgroundColor: '#4ccbf1 ',
+              flex: 1,
+              height: [1300, 'px'],
+              width: [20, '%'],
+              flexDirection: 'column',
+            },
+            children: [
+              {
+                name: 'Username',
+                componentType: 'Text',
+                props: {
+                  backgroundColor: '#4ccbf1 ',
+                  flex: 1,
+                  height: [1300, 'px'],
+                  width: [20, '%'],
+                  flexDirection: 'column',
+                },
+                children: [],
+              },
+            ],
+          },
+        ],
+      };
+      const arrayObj = Helper.combineCss(nestedTree.routes[0]);
+      Helper.cssSetup(arrayObj, userId, () => {
+        expect(fs.existsSync(path.join(__dirname, `../../user/${userId}/src/css/Index.css`))).to.be.true;
+        done();
       });
     });
   });
 
-  describe('User remove: ', () => {
-    const newUser3 = {};
-    Object.assign(newUser3, newUser);
-    newUser3.username = 'silver';
+  describe('Css helper: ', () => {
+    it('Create css object', (done) => {
+      const cssObj = Helper.createCss(treeData.routes[0]);
+      const expectedValue = {
+        flex: 1,
+        'background-color': '#4ccbf1 ',
+        display: 'flex',
+        'align-items': 'center',
+        'justify-content': 'center',
+        height: '1300px',
+        width: '20%',
+        padding: '20px',
+        margin: '20px',
+        position: 'relative',
+        'flex-wrap': 'wrap',
+        'box-sizing': 'border-box',
+      };
+      expect(cssObj).to.eql(expectedValue);
+      done();
+    });
 
-    it('Removes user based on search query when passed object with username property', (done) => {
-      User.create(newUser, (err) => {
-        expect(err).to.not.exist;
-        User.create(newUser3, (err2) => {
-          expect(err2).to.not.exist;
-          User.remove({ username: 'gold' }, (err3) => {
-            expect(err3).to.not.exist;
-            User.get({}, (err4, users) => {
-              expect(err4).to.not.exist;
-              expect(users.length).to.equal(1);
-              expect(users[0].username).to.equal('silver');
-              done();
-            });
-          });
-        });
-      });
+    it('Create an array of Css objects for single component', (done) => {
+      const nestedTree = {
+        total: 3,
+        router: 1,
+        routes: [
+          {
+            name: 'Index',
+            componentType: 'Block',
+            props: {
+              backgroundColor: '#4ccbf1 ',
+              flex: 1,
+              height: [1300, 'px'],
+              width: [20, '%'],
+              flexDirection: 'column',
+            },
+            children: [
+              {
+                name: 'Username',
+                componentType: 'Text',
+                props: {
+                  backgroundColor: '#4ccbf1 ',
+                  flex: 1,
+                  height: [1300, 'px'],
+                  width: [20, '%'],
+                  flexDirection: 'column',
+                },
+                children: [],
+              },
+            ],
+          },
+        ],
+      };
+      const arrayObj = Helper.combineCss(nestedTree.routes[0]);
+      expect(arrayObj.cssResults.length).to.equal(2);
+      expect(arrayObj.cssResults[0].name).to.equal('Index');
+      expect(arrayObj.cssResults[1].name).to.equal('Username');
+      done();
     });
   });
 });

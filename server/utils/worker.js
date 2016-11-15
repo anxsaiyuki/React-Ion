@@ -40,7 +40,7 @@ module.exports = (tree, cb) => {
 
     // tempTreeData.convertedProps = helper.addProps(tempTreeData);
     // tempTreeData.convertedCss = helper.createCss(tempTreeData);
-    helper.addCss(helper.combineCss(tempTreeData), user, () => {
+    helper.cssSetup(helper.combineCss(tempTreeData), user, () => {
       ejs.renderFile(path.join(__dirname, '../templates/components/blockComponent.ejs'), tempTreeData, (err, html) => {
         const jsPath = inital ? mainJsPath : componentPath;
 

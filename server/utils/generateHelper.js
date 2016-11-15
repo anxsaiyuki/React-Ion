@@ -27,9 +27,8 @@ module.exports.addProps = (tree) => {
 };
 
 const createCss = (tree) => {
-
-  const width = tree.props.width ? (tree.props.width[0] + tree.props.width[1]) : '100%';
-  const height = tree.props.height ? (tree.props.height[0] + tree.props.height[1]) : '20px';
+  const w = tree.props.width ? (tree.props.width[0] + tree.props.width[1]) : '100%';
+  const h = tree.props.height ? (tree.props.height[0] + tree.props.height[1]) : '20px';
 
   const convertedCss = {
     flex: tree.props.flex || 1,
@@ -37,8 +36,8 @@ const createCss = (tree) => {
     display: tree.props.display || 'flex',
     'align-items': tree.props.alignItems || 'center',
     'justify-content': tree.props.justifyContent || 'center',
-    height: height,
-    width: width,
+    height: h,
+    width: w,
     padding: tree.props.padding || '20px',
     margin: tree.props.margin || '20px',
     position: tree.props.position || 'relative',
@@ -48,6 +47,8 @@ const createCss = (tree) => {
 
   return convertedCss;
 };
+
+module.exports.createCss = createCss;
 
 module.exports.combineCss = (tree) => {
   // let tempTree = tree;
@@ -72,7 +73,7 @@ module.exports.combineCss = (tree) => {
   return { cssResults: cssArry };
 };
 
-module.exports.addCss = (cssObj, userId, cb) => {
+module.exports.cssSetup = (cssObj, userId, cb) => {
   const cssArry = cssObj.cssResults;
   const cssTemplatePath = path.join(__dirname, '../templates/cssTemplate.ejs');
   const cssPath = path.join(__dirname, `../../user/${userId}/src/css`);
