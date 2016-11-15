@@ -3,16 +3,11 @@ const userController = require('../../../db/controllers/userController');
 
 const router = new express.Router();
 
-router.route('/:userId')
-  .get(userController.getUser);
+router.route('/login')
+  .post(userController.login);
 
-router.route('/')
-  .get(userController.getUsers);
-
-router.route('/')
-  .post(userController.createUser);
-
-router.route('/remove')
-  .delete(userController.removeUser);
+router.route('/signup')
+  .post(userController.signup);
 
 module.exports = router;
+

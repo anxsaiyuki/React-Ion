@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { setSelected } from '../actions/selected';
 
+<<<<<<< HEAD
 const Block = ({
   backgroundColor,
   height,
@@ -47,6 +48,7 @@ const Block = ({
     </div>
   );
 };
+
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({ setSelected }, dispatch);

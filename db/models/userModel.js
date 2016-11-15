@@ -1,4 +1,5 @@
 const db = require('../../server/config/connection');
+require('airbnb-js-shims');
 
 module.exports.get = (params, cb) => {
   const keys = Object.keys(params);
@@ -20,9 +21,9 @@ module.exports.get = (params, cb) => {
 };
 
 module.exports.create = (userProps, cb) => {
-  const params = [userProps.id];
-  const queryString = `insert into users(id)
-                       value (?)`;
+  const params = [userProps.username, userProps.password, userProps.salt];
+  const queryString = `insert into users(username, password, salt)
+                       value (?, ?, ?)`;
   db.query(queryString, params, (err, results) => {
     if (cb) { cb(err, results); }
   });
