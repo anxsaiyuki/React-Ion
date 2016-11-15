@@ -1,9 +1,9 @@
 export const UPDATE_PROPS = 'UPDATE_PROPS';
 export const ADD_CHILD = 'ADD_CHILD';
 export const GET_VALUE = 'GET_VALUE';
+export const REMOVE_CHILD = 'REMOVE_CHILD';
 
 export function updateProps(key, value, id) {
-  console.log(key, value)
   return {
     type: UPDATE_PROPS,
     key,
@@ -19,6 +19,13 @@ export function addChild(componentType, props, id, nextId) {
     props,
     id,
     nextId,
+  };
+}
+
+export function removeChild(id) {
+  return {
+    type: REMOVE_CHILD,
+    id,
   };
 }
 

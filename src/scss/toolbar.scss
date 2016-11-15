@@ -1,0 +1,32 @@
+.toolbar {
+  flex: 1;
+  display: flex;
+  height: 60px;
+  padding: 20px;
+  background-color: white;
+  color: white;
+  position: fixed;
+  z-index: 200;
+  top: 0px;
+  align-items: center;
+  flex-direction: row;
+  width: 100vw;
+  border-bottom: 1px solid rgba(0,0,0,.1);
+
+  button {
+    cursor: pointer;
+    margin-left: 10px;
+    margin-right: 10px;
+    border-radius: 50%;
+    background-color: transparent;
+    color: black;
+    border: 1px solid black;
+    height: 60px;
+    width: 60px;
+    font-size: 20px;
+
+    &:focus {
+      outline: none;
+    }
+  }
+}

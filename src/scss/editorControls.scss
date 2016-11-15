@@ -1,0 +1,77 @@
+.hidden {
+  display: none;
+}
+
+.controls-wrapper {
+  background-color: white;
+  color: black !important;
+  display: flex;
+  height: 60px;
+  color: white;
+  position: fixed;
+  z-index: 200;
+  top: 101px;
+  align-items: center;
+  flex-direction: row;
+  width: 100vw;
+  transition: all .3s;
+
+  .close-controls {
+    font-size: 20px;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    border: 1px solid rgba(0,0,0,.5);;
+    background-color: transparent;
+    border-radius: 50%;
+    cursor: pointer;
+
+    i {
+      color: rgba(0,0,0,.5);
+    }
+
+    &:focus {
+      outline: none;
+    }
+  }
+
+  div {
+   flex: 1;
+   border-right: 1px solid rgba(0,0,0,.05);
+   height: 100%;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   font-size: 12px;
+   transition: all .3s;
+
+      input {
+        margin-left: 10px;
+        margin-right: 10px;
+        padding: 10px;
+        border: 0px;
+        border-bottom: 1px solid rgba(0,0,0,.1);
+      }
+
+     button {
+      cursor: pointer;
+      width: 100%;
+      height: 100%;
+      margin: 0px;
+      border: 0px;
+      background-color: transparent;
+
+      &:hover {
+        background-color: rgba(0,0,0,.05);
+      }
+
+      &:focus {
+        outline: none;
+      }
+    }
+  }
+
+  .hidden {
+   display: none;
+  }
+}

@@ -1,9 +1,9 @@
-import { UPDATE_PROPS, ADD_CHILD } from '../actions/routes';
+import { UPDATE_PROPS, ADD_CHILD, REMOVE_CHILD } from '../actions/routes';
 
 const initialState = [{
   id: 0,
   props: {
-    backgroundColor: 'rgba(0,0,0,.1)',
+    backgroundColor: 'rgba(255,255,255,.1)',
     flex: 1,
     height: [1080, 'px'],
     width: null,
@@ -15,6 +15,8 @@ const initialState = [{
 
 const routes = (routes = initialState, action) => {
   const newTree = Object.assign({}, routes);
+  let parent;
+
   switch (action.type) {
     case UPDATE_PROPS:
       (function update(tree) {
@@ -28,7 +30,6 @@ const routes = (routes = initialState, action) => {
       return newTree;
 
     case ADD_CHILD:
-
       (function add(tree, id) {
         if (tree.id === action.id) {
           tree.children.push({
@@ -41,6 +42,19 @@ const routes = (routes = initialState, action) => {
       }(newTree[0], action.id));
 
       return newTree;
+
+    case REMOVE_CHILD:
+      (function search(tree) {
+        if (tree.id === action.id) {
+          parent.children = parent.children.filter(t => t.id !== action.id)
+        } else if (tree.children.length) {
+          parent = tree;
+          tree.children.forEach(child => search(child));
+        }
+      }(newTree[0]));
+
+      return newTree;
+
     default:
       return routes;
   }
