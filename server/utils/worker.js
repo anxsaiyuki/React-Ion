@@ -2,6 +2,7 @@ const ejs = require('ejs');
 const fs = require('fs.extra');
 const helper = require('./generateHelper');
 const filePath = require('./filePaths');
+const componentHelper = require('./componentHelper');
 
 const structureSetup = (tree, user, callback) => {
   helper.webpackSetup(tree, user, () => {
@@ -20,7 +21,7 @@ const structureSetup = (tree, user, callback) => {
 };
 
 module.exports = (tree, cb) => {
-  const userId = 1;
+  const userId = 2;
   const componentTotal = tree.total;
   let counter = 0;
 
@@ -41,7 +42,7 @@ module.exports = (tree, cb) => {
     // tempTreeData.convertedProps = helper.addProps(tempTreeData);
     // tempTreeData.convertedCss = helper.createCss(tempTreeData);
     helper.cssSetup(helper.combineCss(tempTreeData), userId, () => {
-      ejs.renderFile(filePath.BLOCK_TEMPLATE_PATH, tempTreeData, (err, html) => {
+      ejs.renderFile(componentHelper.getComponent(tempTreeData), tempTreeData, (err, html) => {
         const jsPath = inital ? mainJsPath : componentPath;
 
         fs.writeFile(`${jsPath}/${tempTreeData.name}.jsx`, html, (err2) => {
