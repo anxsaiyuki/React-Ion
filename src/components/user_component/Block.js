@@ -29,13 +29,12 @@ const Block = ({
     width: width ? width[0] + width[1] : null,
     maxHeight: '100%',
     maxWidth: '100%',
-    padding: '20px',
-    margin: margin || '0px',
+    padding,
+    margin,
+    overflow: 'hidden',
     flexWrap: 'wrap',
     cursor: 'pointer',
     boxSizing: 'border-box',
-    borderRadius: 2,
-    overflowY: 'hidden',
     boxShadow: selected === id ? 'inset 0 0 0 2px #93FE3F' : 'inset 0 0 0 2px coral',
   };
 
