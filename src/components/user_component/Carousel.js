@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import ImageGallery from 'react-image-gallery';
 import '../../../node_modules/react-image-gallery/styles/scss/image-gallery.scss';
 
-class Carousels extends Component {
+class Carousel extends Component {
 
   componentDidMount() {
     setTimeout(() => this.forceUpdate(), 50);
@@ -10,7 +10,6 @@ class Carousels extends Component {
 
   render() {
     const { settings, setSelected, selected, id, content } = this.props;
-    console.log(this.props);
     const divStyles = {
       flex: this.props.flex,
       width: `${this.props.width[0]}${this.props.width[1]}`,
@@ -31,5 +30,5 @@ class Carousels extends Component {
     );
   }
 }
-export default Carousels;
+export default Carousel;
 

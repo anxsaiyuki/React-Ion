@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 
-const AddCarousels = ({
+const AddCarousel = ({
   selected,
   nextId,
   addChild,
@@ -8,7 +8,7 @@ const AddCarousels = ({
 }) => {
   const callback = (value) => {
     addChild(
-      'Carousels',
+      'Carousel',
       { content: value,
         height: [50, '%'],
         width: [20, '%'],
@@ -24,9 +24,10 @@ const AddCarousels = ({
           slideOnThumbnailHover: false,
           disableArrowKeys: false,
           showThumbnails: true,
+          disableThumbnailScroll: true,
         },
       },
-      `Carousels${nextId}`,
+      `Carousel${nextId}`,
       selected,
       nextId,
     );
@@ -38,7 +39,7 @@ const AddCarousels = ({
         onClick={() => toggleCarouselModal(
           'Add Main Picture URL',
           'Add an image description',
-          'carousels',
+          'carousel',
           callback,
         )}
       > <i className="fa fa-circle-thin" aria-hidden="true" /> CAROUSEL
@@ -47,11 +48,11 @@ const AddCarousels = ({
   );
 };
 
-AddCarousels.propTypes = {
+AddCarousel.propTypes = {
   selected: PropTypes.number.isRequired,
   nextId: PropTypes.number.isRequired,
   addChild: PropTypes.func.isRequired,
   toggleCarouselModal: PropTypes.func.isRequired,
 };
 
-export default AddCarousels;
+export default AddCarousel;

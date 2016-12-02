@@ -31,11 +31,10 @@ const Block = ({
     maxWidth: '100%',
     padding: padding || '20px',
     margin: margin || '0px',
+    overflow: 'hidden',
     flexWrap: 'wrap',
     cursor: 'pointer',
     boxSizing: 'border-box',
-    borderRadius: 2,
-    overflowY: 'hidden',
     boxShadow: selected === id ? 'inset 0 0 0 2px #93FE3F' : 'inset 0 0 0 2px coral',
   };
 

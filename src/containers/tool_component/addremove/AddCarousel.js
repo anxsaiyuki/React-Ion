@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { addChild, removeChild } from '../../../actions/routes';
 import { toggleCarouselModal } from '../../../actions/toggleTextModal';
-import AddCarousels from '../../../components/tool_component/addremove/AddCarousels';
+import AddCarousel from '../../../components/tool_component/addremove/AddCarousel';
 
 const mapStateToProps = state => (
   {
@@ -19,4 +19,4 @@ const mapDispatchToProps = dispatch => (
   }, dispatch)
 );
 
-export default connect(mapStateToProps, mapDispatchToProps)(AddCarousels);
+export default connect(mapStateToProps, mapDispatchToProps)(AddCarousel);

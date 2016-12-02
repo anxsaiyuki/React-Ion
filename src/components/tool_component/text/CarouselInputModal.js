@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import '../../../scss/textInputModal.scss';
 
-class CarouselsInputModal extends React.Component {
+class CarouselInputModal extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -29,7 +29,7 @@ class CarouselsInputModal extends React.Component {
     const { textModal, closeTextModal } = this.props;
     const { callback, showing, action, placeholder, placeholder2 } = textModal;
     let className = 'modal-hidden';
-    if (action === 'carousels') {
+    if (action === 'carousel') {
       className = showing ? 'modal-wrapper' : 'modal-hidden';
     }
 
@@ -100,9 +100,9 @@ class CarouselsInputModal extends React.Component {
   }
 }
 
-CarouselsInputModal.propTypes = {
+CarouselInputModal.propTypes = {
   textModal: PropTypes.object.isRequired,
   closeTextModal: PropTypes.func.isRequired,
 };
 
-export default CarouselsInputModal;
+export default CarouselInputModal;

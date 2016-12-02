@@ -8,7 +8,7 @@ import BackgroundImageInput from '../../../containers/tool_component/adjustor/Ba
 import AddLink from '../../../containers/tool_component/addremove/AddLink';
 import AddDropDown from '../../../containers/tool_component/addremove/AddDropDown';
 import AddRadio from '../../../containers/tool_component/addremove/AddRadio';
-import AddCarousels from '../../../containers/tool_component/addremove/AddCarousels';
+import AddCarousel from '../../../containers/tool_component/addremove/AddCarousel';
 
 import '../../../scss/AddComponents.scss';
 
@@ -38,7 +38,7 @@ const AddComponents = ({ draggable, closeDraggableModal }) => {
           <AddLink />
           <AddDropDown />
           <AddRadio />
-          <AddCarousels />
+          <AddCarousel />
         </div>
       </div>
     </Draggable>
