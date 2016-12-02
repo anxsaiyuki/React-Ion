@@ -58,10 +58,11 @@ class Inspector extends React.Component {
         textAlign: props.textAlign || 'left',
         content: props.content || '',
       };
-    } else if (prop.info.componentType === 'Carousels') {
+    } else if (prop.info.componentType === 'Carousel') {
 
 
       info = {
+        componentName: prop.info.name,
         slideInterval: props.settings.slideInterval || 2000,
         startIndex: props.settings.startIndex || 0,
         infinite: props.settings.infinite,
@@ -130,7 +131,7 @@ class Inspector extends React.Component {
   }
 
   saveChanges() {
-    if (this.props.info.componentType === 'Carousels') {
+    if (this.props.info.componentType === 'Carousel') {
       Object.keys(this.state.changed).map((key) => {
         let tempValue = this.state.changed[key];
         
@@ -147,14 +148,14 @@ class Inspector extends React.Component {
             'name',
             tempValue,
             this.props.selected,
-            'Carousels',
+            'Carousel',
           );
         } else {
           this.props.updateProps(
             `${key}`,
             tempValue,
             this.props.selected,
-            'Carousels',
+            'Carousel',
           );
         }
       });

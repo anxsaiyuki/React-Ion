@@ -27,7 +27,7 @@ const routes = (routes = emptyCanvas, action) => {
          if (_.isEqual(pagePath.past[pagePath.past.length - 1], pagePath.present)) {
            pagePath.past.pop();
          }
-      } else if (actionType === 'Carousels') {
+      } else if (actionType === 'Carousel') {
         moveToPast(pagePath, routes, actionType);
         const update = (tree) => {
           if (tree.id === id) {

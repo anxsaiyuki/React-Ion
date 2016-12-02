@@ -9,6 +9,7 @@ const Text = ({
   fontSize,
   fontFamily,
   textAlign,
+  padding,
 }) => {
   const textStyle = {
     textAlign,
