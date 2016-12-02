@@ -27,10 +27,10 @@ class Home extends React.Component {
     authenticate().then((status) => {
       if (status.data) {
         this.setState({
-          loggedIn: true,
-          canLoad: true,
+          loggedIn: true
         });
       }
+      this.setState({ canLoad: true });
     });
   }
 
