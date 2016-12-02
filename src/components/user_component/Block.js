@@ -29,7 +29,7 @@ const Block = ({
     width: width ? width[0] + width[1] : null,
     maxHeight: '100%',
     maxWidth: '100%',
-    padding: '20px',
+    padding: padding || '20px',
     margin: margin || '0px',
     flexWrap: 'wrap',
     cursor: 'pointer',
