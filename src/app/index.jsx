@@ -12,6 +12,7 @@ class Home extends React.Component {
     this.state = {
       activeForm: false,
       loggedIn: false,
+      canLoad: false,
       signupError: false,
       loginError: false,
     };
@@ -25,7 +26,10 @@ class Home extends React.Component {
   componentWillMount() {
     authenticate().then((status) => {
       if (status.data) {
-        this.setState({ loggedIn: true });
+        this.setState({
+          loggedIn: true,
+          canLoad: true,
+        });
       }
     });
   }
@@ -43,7 +47,10 @@ class Home extends React.Component {
       .then((user) => {
         if (user.data) {
           createCookie('access_token', user.data.token, 7200);
-          this.setState({ loggedIn: true });
+          this.setState({
+            loggedIn: true,
+            canLoad: true,
+          });
           this.toggleForm();
         } else {
           this.setState({ signupError: true });
@@ -61,7 +68,10 @@ class Home extends React.Component {
       .then((user) => {
         if (user.data) {
           createCookie('access_token', user.data.token, 7200);
-          this.setState({ loggedIn: true });
+          this.setState({
+            loggedIn: true,
+            canLoad: true,
+          });
           this.toggleForm();
         } else {
           this.setState({ loginError: true });
@@ -71,7 +81,10 @@ class Home extends React.Component {
   }
 
   logoutHandler() {
-    this.setState({ loggedIn: false });
+    this.setState({
+      loggedIn: false,
+      canLoad: true,
+    });
 
     // need to destroy cookie.
     const cookies = document.cookie.split(';');
@@ -123,7 +136,7 @@ class Home extends React.Component {
             <button
               className="login-signup"
               onClick={this.logoutHandler}
-            > LOGOUT
+            > {this.state.canLoad ? 'LOGOUT' : ''}
             </button>
           }
           {
@@ -131,7 +144,7 @@ class Home extends React.Component {
             <button
               className="login-signup"
               onClick={this.toggleForm}
-            > LOGIN | SIGNUP
+            > {this.state.canLoad ? 'LOGIN | SIGNUP' : ''}
             </button>
           }
         </div>
