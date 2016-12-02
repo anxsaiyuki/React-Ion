@@ -10,10 +10,12 @@ class Carousels extends Component {
 
   render() {
     const { settings, setSelected, selected, id, content } = this.props;
+    console.log(this.props);
     const divStyles = {
-      width: '100%',
+      flex: this.props.flex,
+      width: `${this.props.width[0]}${this.props.width[1]}`,
+      height: `${this.props.height[0]}${this.props.height[1]}`,
       padding: '10px',
-      height: 'auto',
       flexWrap: 'wrap',
       whiteSpace: 'initial',
       boxShadow: selected === id ? 'inset 0 0 0 1px #93FE3F' : 'inset 0 0 0 1px coral',

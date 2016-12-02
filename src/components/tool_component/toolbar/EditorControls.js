@@ -8,7 +8,6 @@ import TextAlign from '../../../containers/tool_component/text/TextAlign';
 import NameInput from '../../../containers/tool_component/text/NameInput';
 import AddPage from '../../../containers/tool_component/addremove/AddPage';
 import RowColumnPicker from '../../../containers/tool_component/adjustor/RowColumnPicker';
-import ColorPicker from '../../../containers/tool_component/adjustor/ColorPicker';
 import HeightSlider from '../../../containers/tool_component/adjustor/HeightSlider';
 import WidthSlider from '../../../containers/tool_component/adjustor/WidthSlider';
 import FlexSlider from '../../../containers/tool_component/adjustor/FlexSlider';
@@ -30,7 +29,7 @@ const EditorControls = ({ info }) => {
       </div>
     );
   }
-
+  
   return (
     <div className="controls-wrapper">
       <ProjectInfo />
@@ -39,7 +38,6 @@ const EditorControls = ({ info }) => {
       <AddPage />
       <AddBtn />
       <RowColumnPicker />
-      <ColorPicker />
       <HeightSlider />
       <WidthSlider />
       <FlexSlider />

@@ -11,6 +11,7 @@ const emptyCanvas = {
         width: null,
         flexDirection: 'column',
         margin: '0px',
+        padding: '20px',
       },
       children: [],
       componentType: 'Block',

@@ -8,7 +8,7 @@ const HeightSlider = ({ updateProps, selected, info, store }) => {
     : null;
   return (
     <div
-      className={direction === 'column'
+      className={(direction === 'column' && info.name !== 'Carousel')
         ? 'hidden'
         : 'slider'
       }

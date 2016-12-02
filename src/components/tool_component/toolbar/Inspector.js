@@ -53,7 +53,6 @@ class Inspector extends React.Component {
         fontSize: props.fontSize ? `${props.fontSize}px` : '100px',
         color: props.color || 'rgb(2, 255, 22)',
         width: 'calc(100% - 0px)',
-        padding: props.padding || '10px',
         flexWrap: props.flexWrap || 'wrap',
         whiteSpace: props.whiteSpace || 'initial',
         textAlign: props.textAlign || 'left',
